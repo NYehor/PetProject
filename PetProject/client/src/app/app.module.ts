@@ -1,20 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { ThingCardComponent } from './thing-card/thing-card.component';
+import { ThingPageComponent } from './thing-page/thing-page.component';
+import { ThingListComponent } from './thing-list/thing-list.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NavMenuComponent,
+    ThingCardComponent,
+    ThingPageComponent,
+    ThingListComponent
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    HttpClientModule,
-    AppRoutingModule,
-    NgbModule
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

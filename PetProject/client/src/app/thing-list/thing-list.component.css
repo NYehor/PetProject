@@ -1,0 +1,40 @@
+@media only screen and (max-width: 1700px) {
+    .search-result{
+        width: 1600px;
+    }
+}
+
+@media only screen and (max-width: 1620px) {
+    .search-result{
+        width: 1280px;
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    .search-result{
+        width: 960px;
+    }
+}
+
+@media only screen and (max-width: 980px) {
+    .search-result{
+        width: 640px;
+    }
+}
+
+@media only screen and (max-width: 660px) {
+    .search-result{
+        width: 320px;
+    }
+}
+.search-result {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 10px;
+    margin-right: -10px;
+}
+
+.search-result .search-result-item {
+    margin-bottom: 20px;
+}

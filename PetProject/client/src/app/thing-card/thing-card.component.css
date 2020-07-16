@@ -1,0 +1,25 @@
+.card {
+    width: 300px;
+    margin-right: 20px;
+    display: inline-block;
+    justify-content: space-around;
+}
+
+.card-body {
+    padding: 0;
+}
+
+.card .card-body .body-img {
+    height: 225px;
+    width: 100%;
+    background-image: url(/assets/gears.jpg);
+    background-size: cover;
+}
+
+.card .card-header .media .avatar {
+    height: 25px;
+    width: 25px;
+    margin-right: 8px;
+    background-image: url(/assets/avatar_default.jpg);
+    background-size: cover;
+}

@@ -1,0 +1,23 @@
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+  }
+  
+html {
+  font-size: 14px;
+}
+
+#avatar {
+  height: 25px;
+  width: 25px;
+  margin-right: 8px;
+  background-image: url(/assets/avatar_default.jpg);
+  background-size: cover;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
