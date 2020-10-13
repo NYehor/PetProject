@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { ThingCardComponent } from './components/thing-card/thing-card.component';
 import { ThingListComponent } from './components/thing-list/thing-list.component';
@@ -22,6 +23,8 @@ import { RegistrationComponent } from './components/registration/registration.co
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule
   ],
   providers: [],
