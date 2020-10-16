@@ -34,7 +34,6 @@ export class RegistrationValidators {
 
             if (control.value !== matchingControl.value) {
                 matchingControl.setErrors({ mustMatch: true});
-                console.log('FUCK');
             }
             else {
                 matchingControl.setErrors(null);

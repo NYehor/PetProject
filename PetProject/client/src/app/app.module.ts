@@ -4,12 +4,14 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { ThingCardComponent } from './components/thing-card/thing-card.component';
 import { ThingListComponent } from './components/thing-list/thing-list.component';
 import { UserTabsComponent } from './components/profile-page/user-tabs/user-tabs.component';
 import { UserInfoComponent } from './components/profile-page/user-info/user-info.component';
 import { RegistrationComponent } from './components/registration/registration.component';
+import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
   declarations: [
@@ -19,13 +21,15 @@ import { RegistrationComponent } from './components/registration/registration.co
     ThingListComponent,
     UserTabsComponent,
     UserInfoComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

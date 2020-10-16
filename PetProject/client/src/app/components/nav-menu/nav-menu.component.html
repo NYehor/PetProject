@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
   <div class="container">
     <div>
-      <a class="navbar-brand" href="/">PetProject</a>
+      <a class="navbar-brand" [routerLink]="'/'">PetProject</a>
     </div>
     <div class="d-flex flex-grow-1">
       <form class="mr-2 my-auto w-100 d-inline-block">
@@ -52,7 +52,7 @@
               <button type="submit" class="btn btn-primary">Sign in</button>
             </form>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">New around here? Sign up</a>
+            <a class="dropdown-item" [routerLink]="['/register']">New around here? Sign up</a>
             <a class="dropdown-item" href="#">Forgot password?</a>
           </div>
         </li>

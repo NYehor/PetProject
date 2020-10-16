@@ -5,3 +5,12 @@ input.ng-invalid.ng-touched{
 small.validation {
     color: red;
 }
+/* 
+inline {
+    display: inline;
+    vertical-align: top;
+}
+
+half {
+    width: 50%;
+} */

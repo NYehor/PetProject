@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 
+
 namespace PetProject
 {
     public class Startup
@@ -25,6 +26,11 @@ namespace PetProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            services.AddTransient<IUnitOfWork, UnitOfWork>(prvider => {
+                return new UnitOfWork(connectionString);
+            });
             services.AddControllers();
 
             services.AddSpaStaticFiles(configuration =>
@@ -53,12 +59,12 @@ namespace PetProject
             }
 
             app.UseRouting();
-
+            app.UseCors("CorsPolicy");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                        name: "default",
-                        pattern: "{controller}/{action=Index}/{id?}"
+                    name: "default",
+                    pattern: "{controller}/{action=Index}/{id?}"
                     );
             });
 
