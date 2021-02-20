@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PetProject.Models;
+using Domain.Entities;
 
-namespace PetProject.Repositories
+namespace Aplication.Interfaces
 {
     public interface IThingRepository: IRepository<Thing>
     {

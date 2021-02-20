@@ -10,7 +10,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
-
+using Infrastructure;
+using Aplication;
+using Application;
 
 namespace PetProject
 {
@@ -27,15 +29,13 @@ namespace PetProject
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            services.AddTransient<IUnitOfWork, UnitOfWork>(prvider => {
-                return new UnitOfWork(connectionString);
-            });
+            services.AddAplication();
+            services.AddInfrastucture(Configuration);
             services.AddControllers();
 
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "client/dist";
+                configuration.RootPath = "Client/dist";
             });
         }
 

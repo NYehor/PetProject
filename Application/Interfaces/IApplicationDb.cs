@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PetProject.Repositories;
 
-namespace PetProject
+namespace Aplication.Interfaces
 {
-    public interface IUnitOfWork
+    public interface IApplicationDb
     {
         IUserRepository Users { get; }
         IThingRepository Things { get; }

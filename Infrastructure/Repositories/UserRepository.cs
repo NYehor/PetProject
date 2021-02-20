@@ -4,29 +4,27 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using PetProject.Models;
 using Dapper;
+using Domain.Entities;
+using Aplication.Interfaces;
 
-namespace PetProject.Repositories
+namespace Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository, IRepository<User>
     {
-        private string _connectionString;
-        public UserRepository(string connectionString) 
+        private readonly SqlConnection _connection;
+
+        public UserRepository(SqlConnection connection)
         {
-            _connectionString = connectionString;
+            _connection = connection;
         }
 
         public void Create(User item)
         {
-            Console.WriteLine("Work!");
+            string sqlQuery = "INSERT INTO Users (Username, Email, Password, FirstName, LastName, RegistrationDate) " +
+                "VALUES (@Username, @Email, @Password, @FirstName, @LastName, @RegistrationDate)";
 
-            using (IDbConnection db = new SqlConnection(_connectionString))
-            {
-
-                string sqlQuery = "INSERT INTO Users (Username, Email, Password, FirstName, LastName, RegistrationDate) VALUES (@Username, @Email, @Password, @FirstName, @LastName, @RegistrationDate)";
-                db.Execute(sqlQuery, item);
-            }
+            _connection.Execute(sqlQuery, item);        
         }
 
         public void Delete(User item)
