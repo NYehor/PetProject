@@ -8,5 +8,6 @@ namespace Aplication.Interfaces
 {
     public interface IUserRepository: IRepository<User>
     {
+        Task<User> FindByUserNameAsync(string userName);
     }
 }

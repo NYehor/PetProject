@@ -7,10 +7,9 @@ namespace Aplication.Interfaces
 {
     public interface IRepository<T> where T: class
     {
-        T GetById(int id);
-        void Create(T item);
-        void Update(T item);
-        void Delete(T item);
-        void Save();
+        Task<T> FindByIdAsync(Guid id);
+        Task<int> CreateAsync(T item);
+        Task<int> UpdateAsync(T item);
+        Task<int> DeleteAsync(T item);
     }
 }

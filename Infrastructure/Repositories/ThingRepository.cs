@@ -10,27 +10,22 @@ namespace Infrastructure.Repositories
 {
     public class ThingRepository : IThingRepository
     {
-        public void Create(Thing item)
+        public Task<int> CreateAsync(Thing item)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(Thing item)
+        public Task<int> DeleteAsync(Thing item)
         {
             throw new NotImplementedException();
         }
 
-        public Thing GetById(int id)
+        public Task<Thing> FindByIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public void Save()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(Thing item)
+        public Task<int> UpdateAsync(Thing item)
         {
             throw new NotImplementedException();
         }

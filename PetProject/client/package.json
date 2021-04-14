@@ -24,6 +24,7 @@
     "bootstrap": "^4.5.0",
     "bootstrap-icons": "^1.0.0-alpha5",
     "jquery": "^3.5.1",
+    "oidc-client": "^1.11.5",
     "popper.js": "^1.16.1",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",

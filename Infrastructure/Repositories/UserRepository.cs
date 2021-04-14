@@ -10,7 +10,7 @@ using Aplication.Interfaces;
 
 namespace Infrastructure.Repositories
 {
-    public class UserRepository : IUserRepository, IRepository<User>
+    public class UserRepository : IUserRepository
     {
         private readonly SqlConnection _connection;
 
@@ -19,32 +19,52 @@ namespace Infrastructure.Repositories
             _connection = connection;
         }
 
-        public void Create(User item)
+        public async Task<int> CreateAsync(User item)
         {
-            string sqlQuery = "INSERT INTO Users (Username, Email, Password, FirstName, LastName, RegistrationDate) " +
-                "VALUES (@Username, @Email, @Password, @FirstName, @LastName, @RegistrationDate)";
+            const string sqlQuery = "INSERT INTO [dbo].[Users] VALUES (@Id, @UserName, @NormalizedUserName, @Email, @NormalizedEmail," +
+                "@EmailConfirmed, @PasswordHash, @SecurityStamp, @ConcurrencyStamp, @PhoneNumber, @PhoneNumberConfirmed, " +
+                "@TwoFactorEnabled, @LockoutEnd, @LockoutEnabled, @AccessFailedCount, @FirstName, @SecondName)";
 
-            _connection.Execute(sqlQuery, item);        
+
+            return await _connection.ExecuteAsync(sqlQuery, item);        
         }
 
-        public void Delete(User item)
+        public async Task<int> DeleteAsync(User item)
         {
-            throw new NotImplementedException();
+            string sql = "DELETE FROM Users WHERE Id = @Id";
+
+            return await _connection.ExecuteAsync(sql, new { item.Id});
         }
 
-        public User GetById(int id)
+        public async Task<int> UpdateAsync(User item)
         {
-            throw new NotImplementedException();
+            string sqlQuery = "UPDATE Users" +
+                 "SET (@Username, @Email, @PasswordHash, @FirstName, @LastName, @RegistrationDate)" +
+                 "WHERE Id = @Id";
+
+            return await _connection.ExecuteAsync(sqlQuery, item);
         }
 
-        public void Save()
+        public async Task<User> FindByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            string sql = "SELECT * FROM Users WHERE Id = @Id";
+
+            return await _connection.QuerySingleOrDefaultAsync(sql, new { Id = id });
         }
 
-        public void Update(User item)
+        public async Task<User> FindByUserNameAsync(string userName)
         {
-            throw new NotImplementedException();
+            string sql = "SELECT * FROM Users WHERE UserName = @UserName;";
+
+            var tmp = await _connection.QuerySingleOrDefaultAsync<User>(sql, new
+            {
+                UserName = userName
+            });
+
+            return await _connection.QuerySingleOrDefaultAsync<User>(sql, new
+            {
+                UserName = userName
+            });
         }
     }
 }

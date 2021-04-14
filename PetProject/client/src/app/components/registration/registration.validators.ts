@@ -1,28 +1,9 @@
-import { FormControl, FormGroup} from '@angular/forms';
+import { AbstractControl, FormGroup, AsyncValidatorFn, ValidationErrors} from '@angular/forms';
+import { RegistrationService } from '../../services/registration/registration.service';
 import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
-export class RegistrationValidators {
-
-    static uniqEmail(control: FormControl): Promise<any> | Observable<any> {
-        return new Promise(resolve => {
-            setTimeout(() =>
-            {
-                resolve(null);
-                //resolve({uniqEmail: true});
-            }, 1000);
-        });
-    }
-
-    static uniqUsername(control: FormControl): Promise<any> | Observable<any> {
-        return new Promise(resolve => {
-            setTimeout(() =>
-            {
-                resolve(null);
-                //resolve({uniqUsername: true});
-            }, 1000);
-        });
-    }
-
+export class PasswordValidators {
     static mustMatch(password: string, passwordConfirm: string): any {
         return (formGroup: FormGroup) => {
             const control = formGroup.controls[password];
@@ -40,4 +21,37 @@ export class RegistrationValidators {
             }
           };
     }
+}
+
+export function UniqEmail(registrationService: RegistrationService): AsyncValidatorFn  {
+    return (control: AbstractControl): Observable<ValidationErrors> | null => {
+        const email = control.value;
+
+        if (!email.includes('@')) {
+             return null;
+        }
+        console.log('work');
+        return registrationService.checkEmailAvailability(email).pipe(
+            tap((result: boolean) => {
+                console.log(result ? {uniqemail: {value : control.value}} : null);
+            }),
+            map((result: boolean) => {
+                console.log(result ? {uniqemail: {value : control.value}} : null);
+                return result ? {uniqemail: {value : control.value}} : null;
+            }));
+    };
+}
+
+export function UniqUsername(registrationService: RegistrationService): AsyncValidatorFn {
+    return (control: AbstractControl): any | null => {
+        const username = control.value;
+
+        if (username === ''){
+            return null;
+        }
+
+        registrationService.checkUsernameAvailability(username).subscribe(result => {
+            return !result ? {uniqusername: {value : control.value}} : null;
+        });
+    };
 }

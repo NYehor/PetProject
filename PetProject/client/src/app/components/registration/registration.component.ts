@@ -1,8 +1,10 @@
 import { ReturnStatement } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RegistrationValidators } from './registration.validators';
+import { FormControl, FormGroup, FormBuilder, ReactiveFormsModule, Validators, AbstractControl } from '@angular/forms';
+import { PasswordValidators, UniqEmail, UniqUsername } from './registration.validators';
 import { RegistrationService } from '../../services/registration/registration.service';
+import { Observable } from 'rxjs';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-registration',
@@ -20,9 +22,8 @@ export class RegistrationComponent implements OnInit {
     this.form = this.formBuilder.group({
       email: new FormControl('', [
         Validators.email,
-        Validators.required
-      ], [
-        RegistrationValidators.uniqEmail
+        Validators.required,
+        UniqEmail(this.registrationService)
       ]),
       password: new FormControl('', [
         Validators.required,
@@ -32,9 +33,8 @@ export class RegistrationComponent implements OnInit {
         Validators.required,
       ]),
       username: new FormControl('', [
-        Validators.required
-      ], [
-        RegistrationValidators.uniqUsername
+        Validators.required,
+        UniqUsername(this.registrationService)
       ]),
       firstname: new FormControl('', [
         Validators.required
@@ -42,8 +42,8 @@ export class RegistrationComponent implements OnInit {
       lastname: new FormControl('', [
         Validators.required
       ])
-    }, {
-      validators: RegistrationValidators.mustMatch('password', 'confirmPassword')
+      }, {
+      validators: PasswordValidators.mustMatch('password', 'confirmPassword')
     });
   }
 
@@ -54,9 +54,9 @@ export class RegistrationComponent implements OnInit {
     const formData = new FormData();
     formData.append('email', this.form.get('email').value);
     formData.append('username', this.form.get('username').value);
-    formData.append('firstname', this.form.get('firstname').value);
-    formData.append('lastname', this.form.get('lastname').value);
-    formData.append('password', this.form.get('password').value);
+    formData.append('firstname', this.form.get('firstname').value)
+    formData.append('lastname', this.form.get('lastname').value)
+    formData.append('password', this.form.get('password').value)
 
     this.registrationService.uploadForm(formData).subscribe(result => {
       console.log('POST: ', result);
