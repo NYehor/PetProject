@@ -52,7 +52,7 @@ namespace Infrastructure.Identity.Tables
         {
             string sqlQuery = "SELECT * FROM [dbo].[Users] WHERE Id = @Id";
 
-            return await _connection.QuerySingleOrDefaultAsync(sqlQuery, new { Id =  userId });
+            return await _connection.QuerySingleOrDefaultAsync<ApplicationUser<TKey>>(sqlQuery, new { Id =  userId });
         }
 
         public async Task<ApplicationUser<TKey>> FindByUserNameAsync(string normalizedUserName)

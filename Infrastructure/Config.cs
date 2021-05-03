@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using IdentityServer4;
 using IdentityServer4.Models;
 using Microsoft.AspNetCore.Identity;
 
@@ -33,15 +34,22 @@ namespace Infrastructure
             return new[]
             {
                 new Client {
-                    RequireConsent = false,
                     ClientId = "angular_spa",
                     ClientName = "Angular SPA",
+
                     AllowedGrantTypes = GrantTypes.Implicit,
-                    AllowedScopes = { "openid", "profile", "email", "api.read" },
+                    AllowedScopes = {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Email,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "api.read" 
+                    },
                     RedirectUris = {"http://localhost:4200/auth-callback"},
                     PostLogoutRedirectUris = {"http://localhost:4200/"},
                     AllowedCorsOrigins = {"http://localhost:4200"},
+
                     AllowAccessTokensViaBrowser = true,
+                    RequireConsent = false,
                     AccessTokenLifetime = 3600
                 }
             };

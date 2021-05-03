@@ -1,0 +1,13 @@
+small.validation {
+    color: red;
+}
+
+div.maxwidth {
+    margin-top: 250px;
+    max-width: 500px;
+    margin: auto;
+}
+
+#wrapper {
+    position:absolute;
+}

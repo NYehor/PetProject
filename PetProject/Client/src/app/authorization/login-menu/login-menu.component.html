@@ -1,0 +1,39 @@
+<ng-container
+  *ngIf="!(isAuthenticated |async); then signupUser; else signoutUser">
+</ng-container>
+
+<ng-template #signupUser >
+  <li class="nav-item dropdown" id="signup">
+    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+      Sign Up
+    </a>
+    <div class="dropdown-menu dropdown-menu-right"> 
+      <div class="dropdown-item" href="#">
+        <a style="cursor: pointer;">Don’t have an account?</a>
+        <br>
+        <a [routerLink]="['/register']" >Sign up here.</a>
+      </div>
+      <div class="dropdown-divider"></div>
+      <div class="dropdown-item">
+        <a  [routerLink]="['/login']">
+          <button class="btn btn-dark w-100">Log In</button>
+      </a>
+      </div>
+    </div>
+  </li>
+</ng-template>
+
+<ng-template #signoutUser>
+  <li class="nav-item dropdown" id="">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <img id="avatar" class="rounded-circle">
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+      <a class="dropdown-item" href="#">View Profile</a>
+      <a class="dropdown-item" href="#">My Designs</a>
+      <a class="dropdown-item" href="#">My Likes</a>
+      <a class="dropdown-item" href="#">Account Setting</a>
+      <a class="dropdown-item" [routerLink]="['/logout']" (click)="logout()">Log Out</a>
+    </div>
+  </li>
+</ng-template>

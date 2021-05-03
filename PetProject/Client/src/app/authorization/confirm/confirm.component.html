@@ -1,0 +1,8 @@
+<ng-container *ngIf="!isConfirmaed; else confirmed">
+    <div class="header"> We've sent confirmation link via email!</div>
+    <div>Please confirm you profile.</div>
+</ng-container>
+
+<ng-container #confirmed>
+    <div>Your profile is confirmed!</div>
+</ng-container>

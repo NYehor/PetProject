@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using WebUI.ModelDto;
 
 namespace WebUI.Controllers
 {
@@ -30,36 +31,21 @@ namespace WebUI.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Registration()
+        public async Task<IActionResult> Registration([FromForm] UserDto user)
         {
-            var user = new ApplicationUser<string>
-            {
-                Id = Guid.NewGuid().ToString(),
-                UserName = Request.Form.FirstOrDefault(p => p.Key == "username").Value,
-                Email = Request.Form.FirstOrDefault(p => p.Key == "email").Value,
-                FirstName = Request.Form.FirstOrDefault(p => p.Key == "firstname").Value,
-                SecondName = Request.Form.FirstOrDefault(p => p.Key == "lastname").Value,
-                RegistrationDate = DateTime.Now
-            };
+            var appUser = user.GetApplicationUser();
+            var result = await _userManager.CreateAsync(appUser, user.Password);
 
-            var result = await _userManager.CreateAsync(user, Request.Form.FirstOrDefault(p => p.Key == "password").Value);
+            if (!result.Succeeded) BadRequest(result.Errors.ToString());
 
-            if (result.Succeeded)
-            {
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                return Ok();
-            }
-            else
-                return BadRequest(result.Errors.ToString());
+            await _signInManager.SignInAsync(appUser, isPersistent: false);
+            return Ok();
         }
 
         [HttpPost]
         [AllowAnonymous]
         public async Task<JsonResult> CheckUsernameIsAvailability([FromBody] string name)
         {
-            var cont = ControllerContext.HttpContext;
-            var req = Request.Body.Length;
-
             if (name == null)
                 return Json(true);
 
@@ -75,7 +61,6 @@ namespace WebUI.Controllers
         [AllowAnonymous]
         public async Task<JsonResult> CheckEmailIsAvailability([FromBody] string email)
         {
-            var cont = ControllerContext.HttpContext;
             if (email == null) 
                 return Json(true);
 
@@ -87,20 +72,21 @@ namespace WebUI.Controllers
                 return Json(false);
         }
 
+
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login()
+        public async Task<JsonResult> Login([FromBody] CredentialDto data)
         {
-            var email = Request.Form.FirstOrDefault(p => p.Key == "email").Value;
-            var password = Request.Form.FirstOrDefault(p => p.Key == "password").Value;
-            var result = await _signInManager.PasswordSignInAsync(email, password, true, false);
+            var user = await _userManager.FindByEmailAsync(data.Email);
+
+            if (user == null) return Json(false);
+
+            var result = await _signInManager.PasswordSignInAsync(user, data.Password, true, false);
 
             if (result.Succeeded)
-            {             
-                return Ok();
-            }
-
-            return Ok("WTF");
+                return Json(true);
+            else
+                return Json(false);
         }
 
         [HttpPost]
@@ -129,5 +115,4 @@ namespace WebUI.Controllers
                 return BadRequest("Error");
         }
     }
-
 }

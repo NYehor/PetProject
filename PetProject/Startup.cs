@@ -11,10 +11,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Infrastructure;
 using Infrastructure.Identity;
 using Application;
-
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace PetProject
 {
@@ -34,6 +36,9 @@ namespace PetProject
             services.AddAplication();
             services.AddInfrastucture(Configuration);
             services.AddControllers();
+            //var jwtAppSettingOptions = Configuration.GetSection("JwtIssuerOptions");
+            //var tmp = jwtAppSettingOptions["Issuer"];
+            
 
             services.AddSpaStaticFiles(configuration =>
             {
@@ -62,13 +67,13 @@ namespace PetProject
 
             app.UseIdentityServer();
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseIdentityServer();
             app.UseCors("CorsPolicy");
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}"
-                    );
+                endpoints.MapDefaultControllerRoute();
             });
 
             app.UseSpa(spa =>

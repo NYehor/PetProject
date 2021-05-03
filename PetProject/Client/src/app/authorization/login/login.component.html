@@ -1,0 +1,44 @@
+<div class="maxwidth">
+  <br>
+  <br>
+  <h1 style="text-align: center;">Sign In to your account.</h1>
+  <br>
+  <form class="px-4 py-3" [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-group">
+      <label for="authInputEmail">Email address</label>
+      <input type="email" class="form-control" id="authInputEmail" placeholder="Enter email" formControlName="email">
+      <div *ngIf="form.get('email').invalid && form.get('email').touched">
+          <small
+              *ngIf="form.get('email').errors.required" 
+              class="validation"
+          >
+              Please fill out this field.
+          </small>
+          <small
+              *ngIf="form.get('email').errors.email" 
+              class="validation"
+          >
+              Please fill correct email.
+          </small>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="authInputPassword">Password</label>
+      <input type="password" class="form-control" id="authInputPassword" placeholder="Enter password" formControlName="password">
+      <div *ngIf="form.get('password').invalid && form.get('password').touched">
+        <small
+            *ngIf="form.get('password').errors.required" 
+            class="validation"
+        >
+            Please fill out this field.
+        </small>
+    </div>
+    </div>
+    <button type="submit" [disabled]="form.invalid"  class="btn btn-dark" style="width: 100%;">Sign in</button>
+  </form>
+  <div class="dropdown-divider"></div>
+  <a class="dropdown-item" [routerLink]="['/register']">New around here? Sign up</a>
+  <a class="dropdown-item" href="#">Forgot password?</a>
+</div>
+
+

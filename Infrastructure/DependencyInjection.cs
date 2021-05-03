@@ -8,6 +8,7 @@ using Aplication.Interfaces;
 using System.Data.SqlClient;
 using Infrastructure.Identity;
 using Infrastructure.Identity.Tables;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Infrastructure
 {
@@ -20,8 +21,6 @@ namespace Infrastructure
             services.AddTransient<SqlConnection>(e => new SqlConnection(connectionString));
             services.AddTransient<IApplicationDb, ApplicationDb>();
 
-            services.AddIdentity<ApplicationUser<string>, IdentityRole<string>>()
-                .AddDefaultTokenProviders();
             services.AddTransient<IUserStore<ApplicationUser<string>>, UserStore<string>>();
             services.AddTransient<IRoleStore<IdentityRole<string>>, RoleStore<string>>();
 
@@ -33,11 +32,29 @@ namespace Infrastructure
             services.AddTransient<UsersTable<string>>();
             services.AddTransient<UserTokensTable<string>>();
 
+            services.AddIdentity<ApplicationUser<string>, IdentityRole<string>>()
+                .AddUserStore<UserStore<string>>()
+                .AddRoleStore<RoleStore<string>>()
+                .AddDefaultTokenProviders();
+
+            //services.AddIdentityServer()
+            //    .AddApiAuthorization<ApplicationUser<string>, ApplicationDbContext>();
+
             services.AddIdentityServer().AddDeveloperSigningCredential()
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients())
                 .AddAspNetIdentity<ApplicationUser<string>>();
+
+            services.AddAuthentication()
+                    //.AddGoogle(googleOptions => {
+                    //    IConfigurationSection googleAuthNSection =
+                    //    configuration.GetSection("Authentication:Google");
+
+                    //    googleOptions.ClientId = googleAuthNSection["ClientId"];
+                    //    googleOptions.ClientSecret = googleAuthNSection["ClientSecret"];
+                    //})
+                    .AddIdentityServerJwt();
 
             return services;
         }
