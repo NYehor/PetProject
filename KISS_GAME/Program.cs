@@ -1,9 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using KISS_GAME;
+using KISS_MODEL_VIEWER;
+using OpenTK.Windowing.Desktop;
 
-namespace KISS_GAME
+namespace KISS_MODEL_VIEWER
 {
     class Program
     {
@@ -15,13 +16,18 @@ namespace KISS_GAME
         static void Main(string[] args)
         {
             string currentProjectLocation = Directory.GetCurrentDirectory();
-            int indexFolderName = currentProjectLocation.IndexOf(PROJECT_NAME);
-            string projectPath = currentProjectLocation.Substring(0, indexFolderName + PROJECT_NAME.Length);
+            //int indexFolderName = currentProjectLocation.IndexOf(PROJECT_NAME);
+            //string projectPath = currentProjectLocation.Substring(0, indexFolderName + PROJECT_NAME.Length);
 
-            string filePath = Path.Combine(projectPath, TEAPOT_STL_FILENAME);
+            //string filePath = Path.Combine(projectPath, TEAPOT_STL_FILENAME);
 
 
-            Triangle[] triangles = STLParser.ReadToTriangles(filePath);
+            //Triangle[] triangles = STLParser.ReadToTriangles(filePath);
+
+            using (ViewerWindow viewerWindow = new ViewerWindow(800, 600, "Model Viewer"))
+            {
+                viewerWindow.Run();
+            }
         }
     }
 }

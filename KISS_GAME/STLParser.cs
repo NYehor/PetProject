@@ -3,7 +3,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace KISS_GAME
+namespace KISS_MODEL_VIEWER
 {
     public static class STLParser
     {

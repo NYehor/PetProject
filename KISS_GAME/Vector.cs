@@ -1,4 +1,4 @@
-﻿namespace KISS_GAME
+﻿namespace KISS_MODEL_VIEWER
 {
     public struct Vector
     {
